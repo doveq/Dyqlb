@@ -3,8 +3,8 @@
 
 @section('headJsCss')
     <style>
-        .descr {font-size: 12px;}
-        .tdtime {max-width: 100px;}
+        .table {font-size: 12px;}
+        .descr,.link {word-break:break-all;}
     </style>
 @endsection
 
@@ -59,10 +59,10 @@
                         <th scope="col">#</th>
                         <th scope="col">标题图片</th>
                         <th scope="col">标题/简介/价格/URL</th>
-                        <th scope="col">时间</th>
-                        <th scope="col">类型/分类</th>
-                        <th scope="col">顶/踩/收藏</th>
-                        <th scope="col">状态/操作</th>
+                        <th scope="col" width="100">时间</th>
+                        <th scope="col" width="100">类型/分类</th>
+                        <th scope="col" width="100">顶/踩/收藏</th>
+                        <th scope="col" width="100">状态/操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,12 +72,12 @@
                         <th>{{$item->id}}</th>
                         <td><img src="{{$item->title_thumb_url}}" /></td>
                         <td>
-                            <p>{{$item->title}}</p>
+                            <h4>{{$item->title}}</h4>
                             <p class="descr">{{$item->description}}</p>
                             <p>价格：{{$item->price}}</p>
-                            <p><a href="{{$item->link}}" target="_blank">{{$item->link}}</a></p>
+                            <p><a class="link" href="{{$item->link}}" target="_blank">{{$item->link}}</a></p>
                         </td>
-                        <td class="tdtime">{{$item->created_at}}</td>
+                        <td>{{$item->created_at}}</td>
                         <td>
                             <p>{{$item->type_str}}</p>
                             <p>{{$item->category_str}}</p>

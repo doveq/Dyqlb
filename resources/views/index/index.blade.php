@@ -36,10 +36,13 @@
                 <a href="{{$item->link}}" target="_blank">
                     <img class="card-thumb img-thumbnail" src="{{$item->title_thumb_url}}" alt="">
                 </a>
+                <div class="card-add-favorite">
+                    <a href="#shoucang"><i class="iconfont icon-shoucang"></i><span>收藏</span></a>
+                </div>
                 <div class="card-text">{{$item->description}}</div>
                 <div class="card-btn">
                     <div class="card-price"><i class="iconfont icon-jine"></i><span>{{$item->price}}</span></div>
-                    <a href="{{$item->link}}" class="btn btn-ytjj float-right" target="_blank">一探究竟</a>
+                    <a href="{{$item->link}}" class="btn-ytjj" target="_blank">一探究竟</a>
                 </div>
             </div>
             @endforeach

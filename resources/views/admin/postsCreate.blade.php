@@ -3,8 +3,11 @@
 
 @section('headJsCss')
     <link rel="stylesheet" href="/css/cropper.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="/css/bootstrap-tagsinput-typeahead.css">
     <script src="/js/cropper.min.js"></script>
-
+    <script src="/js/bloodhound.min.js"></script>
+    <script src="/js/bootstrap-tagsinput.js"></script>
     <style>
 
     </style>
@@ -41,6 +44,7 @@
                     </select>
                 </div>
 
+                {{--
                 <div class="form-group">
                     <label for="description">商品分类</label>
                     <select class="custom-select" name="category_id">
@@ -49,6 +53,7 @@
                     @endforeach
                     </select>
                 </div>
+                --}}
 
                 <div class="form-group">
                     <label for="description">帖子类型</label>
@@ -67,6 +72,11 @@
                 <div class="form-group">
                     <label for="description">商品描述</label>
                     <textarea class="form-control" id="description" name="description" rows="6" placeholder="商品描述" required>@isset($posts->description){{$posts->description}}@endisset</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">商品标签</label>
+                    <input class="form-control" id="tags" name="tags" placeholder="商品标签" data-role="tagsinput" value="@isset($posts->tags){{$posts->tags}}@endisset" required>
                 </div>
 
                 <div class="form-group">
@@ -89,10 +99,10 @@
                     <label for="title">商品图片</label>
                     <input type="file" class="form-control-file" name="title_thumb" id="title_thumb"  accept="image/jpg,image/jpeg,image/png">
                     {{-- <input type="hidden" id="title_thumb_base64" name="title_thumb_base64" value=""> --}}
-                    <input type="hidden" id="crop_width" name="crop_width" value="">
-                    <input type="hidden" id="crop_height" name="crop_height" value="">
-                    <input type="hidden" id="crop_x" name="crop_x" value="">
-                    <input type="hidden" id="crop_y" name="crop_y" value="">
+                    <input type="hidden" id="crop_width" name="crop_width" value="0">
+                    <input type="hidden" id="crop_height" name="crop_height" value="0">
+                    <input type="hidden" id="crop_x" name="crop_x" value="0">
+                    <input type="hidden" id="crop_y" name="crop_y" value="0">
                 </div>
 
                 <div class="form-group">
@@ -103,7 +113,6 @@
                 </div>
 
                 <div class="form-group float-right">
-                    <a href="javascript:setCropInfo()">剪切图片</a>
                     <button type="submit" class="btn btn-primary">确认提交</button>
                 </div>
             </form>

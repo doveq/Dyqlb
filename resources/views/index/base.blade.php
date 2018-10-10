@@ -9,23 +9,31 @@
         <link rel="stylesheet" href="/css/index.css">
         <link rel="stylesheet" href="/css/iconfont.css">
         <script src="/js/jquery-3.3.1.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/popper.min.js"></script>
         @yield('headJsCss')
     </head>
     <body>
         <nav id="index-nav-container" class="fixed-top">
             <div class="nav-accent nav-accent-left" ></div>
             <div class="nav-accent nav-accent-right" ></div>
-            <div id="index-nav">
-                <ul >
-                    <li><a href="#"><i class="iconfont icon-faxian"></i><span>发现</span></a></li>
+            <div id="index-nav" class="inav">
+                <ul>
+                    <li><a href="#" class="selected"><i class="iconfont icon-faxian"></i><span>发现</span></a></li>
                     <li><a href="#"><i class="iconfont icon-huo"></i><span>热门</span></a></li>
                     <li><a href="#"><i class="iconfont icon-nan"></i><span>男</span></a></li>
                     <li><a href="#"><i class="iconfont icon-nv"></i><span>女</span></a></li>
-                    <li><a href="#" class="selected"><i class="iconfont icon-zhekou"></i><span>最新</span></a></li>
+                    <li><a href="#"><i class="iconfont icon-zhekou"></i><span>最新</span></a></li>
                     <li><a href="#"><i class="iconfont icon-fenlei"></i><span>最新</span></a></li>
                     <li><a href="#"><i class="iconfont icon-nan"></i><span>最新</span></a></li>
+                </ul>
+            </div>
+            <div id="mobile-nav" class="inav">
+                <ul>
+                    <li><a href="#" class="selected"><i class="iconfont icon-faxian"></i><span>发现</span></a></li>
+                    <li><a href="#"><i class="iconfont icon-huo"></i><span>热门</span></a></li>
+                    <li><a href="#"><i class="iconfont icon-fenlei"></i><span>最新</span></a></li>
+                    <li><a href="#"><i class="iconfont icon-sousuo"></i><span>搜索</span></a></li>
                 </ul>
             </div>
         </nav>

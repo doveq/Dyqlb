@@ -57,6 +57,12 @@ class Files  {
         exec($cmd); // 生成图片
         */
 
+        if ($cropWidth == 0)
+            $cropWidth = $postsThumbWidth;
+
+        if ($cropHeight == 0)
+            $cropHeight = $postsThumbHeight;
+
         $cmd = config('config.imageMagickDir') . "/convert \"{$uploadFilePath}\" -strip -quality 80% -crop {$cropWidth}x{$cropHeight}+{$cropX}+{$cropY} \"{$thumbPath}\" ";
         exec($cmd); // 剪裁图片
 

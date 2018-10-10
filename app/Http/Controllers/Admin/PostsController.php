@@ -83,13 +83,13 @@ class PostsController extends Controller
 
         $validatedData = $request->validate([
             'status' => 'required|numeric',
-            'category_id' => 'required|numeric',
+            //'category_id' => 'required|numeric',
             'type' => 'required|numeric',
             'title' => 'bail|required|max:30',
             'description' => 'required|max:300',
             'price' => 'required|numeric',
             'title_thumb' => 'required|file|mimes:jpeg,bmp,png,mp4',
-            'link' => 'required|max:255|url|unique:posts',
+            'link' => 'required|max:300|url|unique:posts',
             'crop_width' => 'numeric',  // 剪裁图片宽度
             'crop_height' => 'numeric', // 剪裁图片高度
             'crop_x' => 'numeric',  // 图片剪裁开始x坐标
@@ -104,11 +104,10 @@ class PostsController extends Controller
             $request->input('crop_width', 0),  $request->input('crop_height', 0),
             $request->input('crop_x', 0), $request->input('crop_y', 0));
 
-        $titleThumb = $titleThumb;
 
         $posts = new Posts;
         $posts->status = $request->status;
-        $posts->category_id = $request->category_id;
+        //$posts->category_id = $request->category_id;
         $posts->type = $request->type;
         $posts->title = $request->title;
         $posts->description = $request->description;
@@ -154,24 +153,31 @@ class PostsController extends Controller
         $validatedData = $request->validate([
             'id' => 'required|numeric',
             'status' => 'required|numeric',
-            'category_id' => 'required|numeric',
+            //'category_id' => 'required|numeric',
             'type' => 'required|numeric',
             'title' => 'bail|required|max:30',
             'description' => 'required|max:300',
             'price' => 'required|numeric',
-            'title_image' => 'mimes:jpeg,bmp,png,mp4',
-            'link' => 'required|max:255|url',
+            'link' => 'required|max:300|url',
+            'title_thumb' => 'file|mimes:jpeg,bmp,png,mp4',
+            'crop_width' => 'numeric',  // 剪裁图片宽度
+            'crop_height' => 'numeric', // 剪裁图片高度
+            'crop_x' => 'numeric',  // 图片剪裁开始x坐标
+            'crop_y' => 'numeric',  // 图片剪裁开始y坐标
         ]);
 
         $posts = Posts::findOrFail($request->id);
         $attachments = json_decode($posts->attachments, true);
 
         // 如果有上传图片,删除旧的图片
-        if( $request->has('title_image') ) {
-            $titleImagePath = $request->file('title_image')->path();
-
+        if( $request->has('title_thumb') ) {
             $files = new Files();
-            $paths = $files->uploadPostsImage($titleImagePath);
+
+            // 处理上传图片
+            $titleThumbPath = $request->file('title_thumb')->path();
+            $titleThumb = $files->uploadPostsImage($titleThumbPath,
+                $request->input('crop_width', 0),  $request->input('crop_height', 0),
+                $request->input('crop_x', 0), $request->input('crop_y', 0));
 
             // 删除旧的图片
             if($posts->title_thumb) {
@@ -184,11 +190,11 @@ class PostsController extends Controller
             }
 
             // 保存数据入库
-            $posts->title_thumb = $paths['thumb'];
+            $posts->title_thumb = $titleThumb;
         }
 
         $posts->status = $request->status;
-        $posts->category_id = $request->category_id;
+        //$posts->category_id = $request->category_id;
         $posts->type = $request->type;
         $posts->title = $request->title;
         $posts->description = $request->description;

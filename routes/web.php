@@ -32,3 +32,10 @@ Route::post('/admin/posts/store', 'Admin\PostsController@store')->name('admin.po
 Route::get('/admin/posts/edit', 'Admin\PostsController@edit')->name('admin.posts.edit');
 Route::post('/admin/posts/update', 'Admin\PostsController@update')->name('admin.posts.update');
 Route::get('/admin/posts/delete', 'Admin\PostsController@delete')->name('admin.posts.delete');
+
+// 标签管理
+Route::get('/admin/tags', 'Admin\TagsController@index')->name('admin.tags.index');
+Route::post('/admin/tags/store', 'Admin\TagsController@store')->name('admin.tags.store');
+Route::get('/admin/tags/edit', 'Admin\TagsController@edit')->name('admin.tags.edit');
+Route::post('/admin/tags/update', 'Admin\TagsController@update')->name('admin.tags.update');
+Route::get('/admin/tags/delete', 'Admin\TagsController@delete')->name('admin.tags.delete');

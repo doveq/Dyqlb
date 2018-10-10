@@ -42,7 +42,7 @@ return [
     /**
      * ImageMagick程序目录
     */
-    'imageMagickDir' => '/usr/local/bin',
+    'imageMagickDir' => env('IMAGE_MAGICK', '/usr/local/bin'),
 
 
     /**

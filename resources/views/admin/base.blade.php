@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/admin.css">
         <script src="/js/jquery-3.3.1.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/popper.min.js"></script>
         @yield('headJsCss')
     </head>
     <body>
@@ -24,10 +24,10 @@
                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="{{route('admin.posts.index')}}">Posts</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
+                        <a class="nav-link" href="{{route('admin.tags.index')}}">Tags</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">Disabled</a>
