@@ -19,7 +19,7 @@ class Posts extends Model {
     /**
      * 该模型是否被自动维护时间戳
      *
-     * @var bool
+     * @var boolean
      */
     public $timestamps = true;
 
@@ -31,11 +31,20 @@ class Posts extends Model {
 
         $config = config('config');
 
+        $titleThumb = json_decode($item->title_thumb,true);
+
         // 图片地址转成url
         $item->title_thumb_url = '';
-        if (isset($item->title_thumb) && $item->title_thumb) {
+        if (!empty($titleThumb)) {
             $file = new Files();
-            $item->title_thumb_url = $file->getPostsImageUrl($item->title_thumb);
+            $item->title_max_thumb_url = $file->getPostsFileUrl($titleThumb['max']);
+            $item->title_min_thumb_url = $file->getPostsFileUrl($titleThumb['min']);
+        }
+
+        $item->title_video_url = '';
+        if (!empty($item->title_video)) {
+            $file = new Files();
+            $item->title_video_url = $file->getPostsFileUrl($item->title_video);
         }
 
         $item->type_str = '';
@@ -54,5 +63,19 @@ class Posts extends Model {
 
         return $item;
     }
+
+
+    /**
+     * 检查url是否已添加
+     *
+     * @return boolean
+     */
+    public function hasLink($link) {
+        $md5link = md5($link);
+
+        $res = $this->where('link_md5', $md5link)->first();
+        return !empty($res->id);
+    }
+
 
 }

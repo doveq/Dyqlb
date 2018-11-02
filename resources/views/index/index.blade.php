@@ -31,13 +31,19 @@
         <div class="d-flex flex-wrap">
             @isset($posts)
             @foreach($posts as $item)
-            <div class="index-card mr-auto">
-                <div class="card-title"><a href="#">{{$item->title}}</a></div>
+            <div class="index-card mr-auto" data-id="{{$item->id}}">
+                <div class="card-title"><a href="{{route('index.show', ['id' => $item->id])}}" target="_blank">{{$item->title}}</a></div>
                 <a href="{{$item->link}}" target="_blank">
-                    <img class="card-thumb img-thumbnail" src="{{$item->title_thumb_url}}" alt="">
+                    @if(!empty($item->title_video_url))
+                        <video class="card-thumb img-thumbnail" muted src="{{$item->title_video_url}}"
+                               @if(!empty($item->title_min_thumb_url)) poster="{{$item->title_min_thumb_url}}" @endif
+                               autoplay loop webkit-playsinline playsinline x5-video-player-type="h5"></video>
+                    @else
+                        <img class="card-thumb img-thumbnail" src="{{$item->title_min_thumb_url}}" alt="">
+                    @endif
                 </a>
                 <div class="card-add-favorite">
-                    <a href="#shoucang"><i class="iconfont icon-shoucang"></i><span>收藏</span></a>
+                    <div class="favorite-body"><i class="iconfont icon-shoucang"></i><span>收藏</span></div>
                 </div>
                 <div class="card-text">{{$item->description}}</div>
                 <div class="card-btn">

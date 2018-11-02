@@ -109,4 +109,44 @@ class TagsController extends Controller
             ->with(['url' => route('admin.tags.index'), 'message' => '标签删除成功！']);
     }
 
+
+    /**
+     * 判断标签是否存在
+     *
+     * @return json
+    */
+    public function isHas(Request $request) {
+        $validatedData = $request->validate([
+            'tag' => 'required'
+        ]);
+
+        $tags = Tags::where('name', $request->tag)->first();
+
+        if (empty($tags->id)) {
+            return response()->json([
+                'status' => 0,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 1,
+                'data' => [
+                    'id' => $tags->id,
+                    'name' => $tags->name,
+                ]
+            ]);
+        }
+    }
+
+
+    /**
+     * 获取标签json数据
+     *
+     * @return json
+    */
+    public function getJson(Request $request) {
+
+        $tags = Tags::select('id', 'name')->orderBy('updated_at', 'desc')->get();
+        return response()->json($tags);
+    }
+
 }

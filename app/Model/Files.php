@@ -12,35 +12,48 @@ use Illuminate\Support\Facades\Storage;
 class Files  {
 
     /**
+     * 图片转换生成格式
+    */
+    public $IMAGE_EXTENSION = '.jpeg';
+
+    /**
+     * 上传视频保存格式
+     */
+    public $VIDEO_EXTENSION = '.mp4';
+
+
+    /**
      * 帖子图片管理
      *
-     * @var string $uploadFilePath 上传文件路径
-     * @var int $cropWidth 剪裁图片宽度
-     * @var int $cropHeight 剪裁图片高度
-     * @var int $cropX 图片剪裁开始x坐标
-     * @var int $cropY 图片剪裁开始y坐标
+     * @param int $postsId 帖子id号
+     * @param string $uploadFilePath 上传文件路径
+     * @param int $cropWidth 剪裁图片宽度
+     * @param int $cropHeight 剪裁图片高度
+     * @param int $cropX 图片剪裁开始x坐标
+     * @param int $cropY 图片剪裁开始y坐标
      *
-     * @return array
+     * @return array min、max
     */
-    public function uploadPostsImage($uploadFilePath, $cropWidth, $cropHeight, $cropX, $cropY) {
+    public function uploadPostsImage($postsId, $uploadFilePath, $cropWidth, $cropHeight, $cropX, $cropY) {
 
-        $postsThumbWidth = config('config.postsThumbWidth');
-        $postsThumbHeight = config('config.postsThumbHeight');
+        $thumbMaxWidth = config('config.postsThumbMaxWidth');
+        $thumbMaxHeight = config('config.postsThumbMaxHeight');
 
-        $extension = '.jpg';
+        $thumbMinWidth = config('config.postsThumbMinWidth');
+        $thumbMinHeight = config('config.postsThumbMinHeight');
+
 
         // 保存原始图片
         $dir = date('Y/m', time());
-        $fileName = uniqid();
-        //$fileStorage = "posts/{$dir}/" . $fileName . $extension;
-
-        // 原始文件保存路径
-        //$filePath = Storage::disk('public')->path($fileStorage);
-
+        $maxFileName = $postsId ."_{$thumbMaxWidth}x{$thumbMaxHeight}";
+        $minFileName = $postsId ."_{$thumbMinWidth}x{$thumbMinHeight}";
 
         // 缩略图路径
-        $thumbStorage = "posts/{$dir}/{$fileName}{$extension}";
-        $thumbPath = Storage::disk('public')->path($thumbStorage);
+        $maxThumbStorage = "posts/{$dir}/{$maxFileName}{$this->IMAGE_EXTENSION}";
+        $maxThumbPath = Storage::disk('public')->path($maxThumbStorage);
+
+        $minThumbStorage = "posts/{$dir}/{$minFileName}{$this->IMAGE_EXTENSION}";
+        $minThumbPath = Storage::disk('public')->path($minThumbStorage);
 
         // 创建目录
         Storage::disk('public')->createDir("posts/{$dir}");
@@ -57,19 +70,19 @@ class Files  {
         exec($cmd); // 生成图片
         */
 
-        if ($cropWidth == 0)
-            $cropWidth = $postsThumbWidth;
-
-        if ($cropHeight == 0)
-            $cropHeight = $postsThumbHeight;
-
-        $cmd = config('config.imageMagickDir') . "/convert \"{$uploadFilePath}\" -strip -quality 80% -crop {$cropWidth}x{$cropHeight}+{$cropX}+{$cropY} \"{$thumbPath}\" ";
+        // 根据js剪裁信息生成图片
+        $cmd = config('config.imageMagickDir') . "/convert -strip -quality 90% -extract {$cropWidth}x{$cropHeight}+{$cropX}+{$cropY} \"{$uploadFilePath}\" \"{$maxThumbPath}\" ";
         exec($cmd); // 剪裁图片
 
-        $cmd = config('config.imageMagickDir') . "/convert \"{$thumbPath}\" -resize \"{$postsThumbWidth}x{$postsThumbHeight}\" \"{$thumbPath}\" ";
+        // 生成大图
+        $cmd = config('config.imageMagickDir') . "/convert \"{$maxThumbPath}\" -thumbnail \"{$thumbMaxWidth}x{$thumbMaxHeight}\" \"{$maxThumbPath}\" ";
         exec($cmd); // 缩放图片
 
-        return $thumbStorage;
+        // 生成小图
+        $cmd = config('config.imageMagickDir') . "/convert \"{$maxThumbPath}\" -thumbnail \"{$thumbMinWidth}x{$thumbMinHeight}\" \"{$minThumbPath}\" ";
+        exec($cmd); // 缩放图片
+
+        return ['min' => $minThumbStorage , 'max' => $maxThumbStorage];
     }
 
 
@@ -101,23 +114,23 @@ class Files  {
 
 
     /**
-     * 获取帖子图片url地址
+     * 获取帖子上传文件url地址
     */
-    public function getPostsImageUrl($path) {
+    public function getPostsFileUrl($path) {
         return Storage::disk('public')->url($path);
     }
 
     /**
-     * 获取帖子图片存储路径
+     * 获取帖子上传文件存储路径
      */
-    public function getPostsImagePath($path) {
+    public function getPostsFilePath($path) {
         return Storage::disk('public')->path($path);
     }
 
     /**
-     * 删除帖子图片
+     * 删除帖子上传文件
     */
-    public function delPostsImage($path) {
+    public function delPostsFile($path) {
         return Storage::disk('public')->delete($path);
     }
 
@@ -140,5 +153,22 @@ class Files  {
     }
      */
 
+
+    /**
+     * @param int $postsId 帖子id号
+     *
+     * @return string
+    */
+    public function uploadPostsVideo($postsId, $uploadVideoPath) {
+        $dir = date('Y/m', time());
+        $fileName = $postsId . $this->VIDEO_EXTENSION;
+
+        $videoStorage = "posts/{$dir}/{$fileName}";
+
+        Storage::disk('public')->putFileAs("posts/{$dir}", new File($uploadVideoPath), $fileName);
+        //Storage::copy($uploadVideoPath, $toPath);
+
+        return $videoStorage;
+    }
 
 }

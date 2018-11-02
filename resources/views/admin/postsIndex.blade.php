@@ -17,6 +17,9 @@
                         <input type="text" class="form-control mb-2" name="id" value="@isset($search['id']){{$search['id']}}@endisset" placeholder="帖子ID" size="5" />
                     </div>
                     <div class="col-auto">
+                        <input type="text" class="form-control mb-2" name="link" value="@isset($search['link']){{$search['link']}}@endisset" placeholder="商品链接" size="20" />
+                    </div>
+                    <div class="col-auto">
                         <select class="custom-select" name="status">
                             <option value="">全部状态</option>
                             @foreach($status as $key => $value)
@@ -24,6 +27,7 @@
                             @endforeach
                         </select>
                     </div>
+                    {{--
                     <div class="col-auto">
                         <select class="custom-select" name="category_id">
                             <option value="">全部分类</option>
@@ -32,6 +36,7 @@
                             @endforeach
                         </select>
                     </div>
+                    --}}
                     <div class="col-auto">
                         <select class="custom-select" name="type">
                             <option value="">全部类型</option>
@@ -60,7 +65,6 @@
                         <th scope="col">标题图片</th>
                         <th scope="col">标题/简介/价格/URL</th>
                         <th scope="col" width="100">时间</th>
-                        <th scope="col" width="100">类型/分类</th>
                         <th scope="col" width="100">顶/踩/收藏</th>
                         <th scope="col" width="100">状态/操作</th>
                     </tr>
@@ -70,18 +74,22 @@
                     @foreach($posts as $item)
                     <tr>
                         <th>{{$item->id}}</th>
-                        <td><img src="{{$item->title_thumb_url}}" /></td>
+                        <td>
+                            @if(!empty($item->title_video_url))
+                                <video muted src="{{$item->title_video_url}}" autoplay loop></video>
+                            @else
+                                <img src="{{$item->title_min_thumb_url}}" />
+                            @endif
+                        </td>
                         <td>
                             <h4>{{$item->title}}</h4>
                             <p class="descr">{{$item->description}}</p>
                             <p>价格：{{$item->price}}</p>
                             <p><a class="link" href="{{$item->link}}" target="_blank">{{$item->link}}</a></p>
+                            <p>分类：{{$item->type_str}}</p>
+                            <p>标签：{{$item->tags}}</p>
                         </td>
                         <td>{{$item->created_at}}</td>
-                        <td>
-                            <p>{{$item->type_str}}</p>
-                            <p>{{$item->category_str}}</p>
-                        </td>
                         <td>{{$item->pros}}/{{$item->cons}}/{{$item->saves}}</td>
                         <td>
                             <p>{{$item->status_str}}</p>

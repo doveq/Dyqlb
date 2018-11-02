@@ -54,7 +54,18 @@ return [
     /**
      * 标题缩略图长边
     */
-    'postsThumbWidth' => 430,
-    'postsThumbHeight' => 430,
+    'postsThumbMaxWidth' => 640,
+    'postsThumbMaxHeight' => 640,
+
+    'postsThumbMinWidth' => 340,
+    'postsThumbMinHeight' => 340,
+
+
+    /**
+     * 腾讯人机验证配置
+    */
+    'txCaptchaUrl' => 'https://ssl.captcha.qq.com/ticket/verify',
+    'txCaptchaAppId' => '2063899576',
+    'txCaptchaAppSecret' => '0CtwTKuYerWD2ErSbCdXE7Q**',
 
 ];

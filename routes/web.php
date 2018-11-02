@@ -15,11 +15,28 @@
 /**
  * 前台路由
 */
-Route::get('/', 'Index\IndexController@index');
+Route::get('/', 'Index\IndexController@index')->name('index');
+
+Route::post('/user/doregister', 'Index\UserController@doRegister')->name('index.user.doRegister');
+Route::post('/user/dologin', 'Index\UserController@doLogin')->name('index.user.doLogin');
+Route::get('/user/logout', 'Index\UserController@logout')->name('index.user.logout');
+Route::get('/search', 'Index\SearchController@index')->name('index.search');
+Route::post('/favorite/store', 'Index\FavoriteController@store')->name('index.favorite.store');
+Route::get('/show/{id}.html', 'Index\ShowController@index')->name('index.show');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', 'Index\UserController@home')->name('index.user.home');
+    Route::get('/user/passwd', 'Index\UserController@passwd')->name('index.user.passwd');
+    Route::post('/user/updatepasswd', 'Index\UserController@updatePasswd')->name('index.user.updatePasswd');
+});
 
 /**
  * 后台路由
 */
+
+// 后台测试
+Route::get('/admin/test', 'Admin\TestController@index');
+
 Route::get('/admin', 'Admin\UsersController@login');
 
 // 页面跳转提示
@@ -39,3 +56,5 @@ Route::post('/admin/tags/store', 'Admin\TagsController@store')->name('admin.tags
 Route::get('/admin/tags/edit', 'Admin\TagsController@edit')->name('admin.tags.edit');
 Route::post('/admin/tags/update', 'Admin\TagsController@update')->name('admin.tags.update');
 Route::get('/admin/tags/delete', 'Admin\TagsController@delete')->name('admin.tags.delete');
+Route::get('/admin/tags/ishas', 'Admin\TagsController@isHas')->name('admin.tags.isHas');
+Route::get('/admin/tags/getjson', 'Admin\TagsController@getJson')->name('admin.tags.getJson');

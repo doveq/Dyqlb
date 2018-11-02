@@ -22,6 +22,7 @@ class CreatePostsTable extends Migration
             $table->integer('uid')->default(0)->unsigned()->comment('发帖用户id');
             $table->string('title', 100)->default("")->comment('帖子标题');
             $table->string('title_thumb')->default("")->comment('标题图片');
+            $table->string('title_video')->default("")->comment('标题视频');
             $table->string('description', 500)->comment('简单描述');
             // tx云mysql版本不支持长varchar数据索引。用md5比对
             //$table->string('link')->default("")->unique()->comment('产品链接地址');

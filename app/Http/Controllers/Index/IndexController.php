@@ -5,7 +5,6 @@
 namespace App\Http\Controllers\Index;
 
 use App\Model\Posts;
-use App\Model\Files;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Index\Controller;
 

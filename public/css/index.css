@@ -1,16 +1,20 @@
 html {
-    font-size : 14px;
 }
 body {
-    padding-top: 110px;
+    padding-top: 120px;
     color: #333;
-    font: 12px/1.3 Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+    font: 14px/1.3 Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
 }
 a {
     color: #333;
 }
 a:hover {
     text-decoration: none;
+}
+
+.alert p {
+    margin-bottom: 0;
+    padding: 3px 0;
 }
 
 #index-nav-container {
@@ -34,25 +38,44 @@ a:hover {
     top: 50px;
     z-index: -10;
 }
-
+#index-top {
+    margin: 0 auto;
+}
 #index-nav {
     position: relative;
     z-index: 9;
+    margin: 50px auto 0;
+}
+#index-nav a span {
+    position: relative;
+    top:-2px;
 }
 
 #mobile-nav {
     display: none;
+    margin: 50px auto 0;
 }
 
 @media (min-width: 50em) {
-
+    #index-top {
+        position: relative;
+        z-index: 9;
+        width: 1110px;
+    }
     #index-nav {
-        margin: 0 auto;
-        width: 970px;
+        width: 1110px;
+    }
+    #index-top #top-search {
+        display: block;
     }
 }
 
 @media (max-width: 990px) {
+    #index-top {
+        position: relative;
+        z-index: 9;
+        width: 100%;
+    }
     #index-nav {
         display: none;
     }
@@ -61,12 +84,14 @@ a:hover {
         width: 100%;
         position: relative;
         z-index: 10;
-        margin-top: 0;
         -webkit-animation: slideDown .5s forwards;
         -moz-animation: slideDown .5s forwards;
         -ms-animation: slideDown .5s forwards;
         -o-animation: slideDown .5s forwards;
         animation: slideDown .5s forwards;
+    }
+    #index-top #top-search {
+        display: none;
     }
 }
 
@@ -74,9 +99,8 @@ a:hover {
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 1.5em;
+    font-size: 16px;
     font-weight: 300;
-    margin-top: 40px;
 }
 
 #index-nav ul li {
@@ -100,7 +124,6 @@ a:hover {
     padding: 0;
     list-style: none;
     font-weight: 300;
-    margin-top: 40px;
 }
 
 #mobile-nav ul li {
@@ -282,7 +305,6 @@ a:hover {
 }
 
 #index-carousel {
-    height: 320px;
     overflow: hidden;
     margin-bottom: 2rem;
 }
@@ -321,10 +343,10 @@ a:hover {
     font-size: 13px;
     margin-top: 5px;
     margin-bottom: 10px;
-    line-height: 1.5rem;
+    line-height: 1.5em;
     text-align: justify;
     text-overflow: ellipsis;
-    height: 40px;
+    height: 3em;
     overflow: hidden;
 }
 
@@ -349,6 +371,8 @@ a:hover {
 }
 
 .index-card .card-price span {
+    position: relative;
+    top: -2px;
 }
 
 .index-card .btn-ytjj {
@@ -393,7 +417,7 @@ a:hover {
     transition: all .1s ease;
 }
 
-.index-card .card-add-favorite a {
+.index-card .card-add-favorite .favorite-body {
     color:#fff;
     font-size: 16px;
     font-weight: 400;
@@ -416,10 +440,172 @@ a:hover {
     height: 200px;
 }
 
+#index-top #user-info {
+    float: right;
+    padding-right: 10px;
+    font-size: 15px;
+    margin-top: 14px;
+}
+
+#index-top #top-search {
+    float: left;
+    margin-top: 6px;
+    margin-left: 10px;
+    position: relative;
+}
+#top-search input {
+    padding-left:25px;
+    border-radius: 3px;
+}
+
+#top-search .iconfont {
+    font-weight: 400;
+    position: absolute;
+    left: 5px;
+    top: 8px;
+    z-index: 10;
+}
+
+#login-modal .text-muted,
+#register-modal .text-muted {
+    font-size: 14px;
+}
+
+#login-modal .form-submit,
+#register-modal .form-submit {
+    width: 100%;
+}
+
+#login-modal .modal-con,
+#register-modal .modal-con {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#login-modal .other-option hr {
+
+}
+
+#login-modal .other-option,
+#register-modal .other-option {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#login-modal .other-option a,
+#register-modal .other-option a {
+    color: #717171;
+}
+
+#home-sidebar .selected a {
+    color: #166ba2;
+}
+
+#home-sidebar .selected {
+    border-radius: 3px;
+    background-color: #f8f9fa;
+}
+
+#user-uppasswd li.col-form-label {
+    font-weight: bold;
+}
+
+#user-uppasswd .text-muted {
+    font-size: 14px;
+}
+
+.pshow {
+
+}
+.pshow-image {
+    align-self: flex-start;
+    flex: 1 1 58%;
+    position: relative;
+    text-align: center;
+}
+.pshow-image .pshow-thumb {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+.pshow-details {
+    color: #606060;
+    align-self: flex-start;
+    flex: 1 1 30%;
+    position: relative;
+}
+.pshow-details .btn-ytjj {
+    margin-top: 40px;
+    display: block;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    background-color: #faab37;
+    text-shadow: 1px 1px rgba(0,0,0,.25);
+    line-height: 1.1;
+    border: 0;
+    outline: 0;
+    padding: 16px 0;
+    font-size: 1.6rem;
+    text-align: center;
+    cursor: pointer;
+}
+.pshow-details .iconfont {
+    font-size: 1.25rem;
+    font-weight: 300;
+    padding-right: 6px;
+}
+.pshow-details .favorite {
+    margin-top: 20px;
+    display: block;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    background-color: #cc1d00;
+    text-shadow: 1px 1px rgba(0,0,0,.25);
+    line-height: 1.1;
+    border: 0;
+    outline: 0;
+    padding: 16px 0;
+    font-size: 1.6rem;
+    text-align: center;
+    cursor: pointer;
+}
+.pshow-details .favorite .iconfont {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+
 @media (max-width: 575px) {
     .index-card {
         flex: 1 1 100%;
         max-width: 100%;
+    }
+    .pshow-image {
+        flex: 1 1 100%;
+    }
+    .pshow-details {
+        flex: 1 1 100%;
+        margin-top: 20px;
+    }
+    .pshow-details .h2 {
+        font-size: 1.5rem;
+    }
+    .pshow-details .lead {
+        font-size: 1rem;
+    }
+    .pshow-details .iconfont {
+        font-size: 1rem;
+    }
+    .pshow-details .btn-ytjj {
+        font-size: 1.2rem;
+    }
+    .pshow-details .favorite {
+        font-size: 1.2rem;
+    }
+    .pshow-details .favorite .iconfont {
+        font-size: 1.2rem;
     }
 }
 
@@ -427,6 +613,31 @@ a:hover {
     .index-card {
         flex: 1 1 100%;
         max-width: 100%;
+    }
+    .pshow-image {
+        flex: 1 1 100%;
+    }
+    .pshow-details {
+        flex: 1 1 100%;
+        margin-top: 20px;
+    }
+    .pshow-details .h2 {
+        font-size: 1.5rem;
+    }
+    .pshow-details .lead {
+        font-size: 1rem;
+    }
+    .pshow-details .iconfont {
+        font-size: 1rem;
+    }
+    .pshow-details .btn-ytjj {
+        font-size: 1.2rem;
+    }
+    .pshow-details .favorite {
+        font-size: 1.2rem;
+    }
+    .pshow-details .favorite .iconfont {
+        font-size: 1.2rem;
     }
 }
 
@@ -437,6 +648,31 @@ a:hover {
         padding-right: 30px;
         max-width: 50%;
     }
+    .pshow-image {
+        flex: 1 1 100%;
+    }
+    .pshow-details {
+        flex: 1 1 100%;
+        margin-top: 20px;
+    }
+    .pshow-details .h2 {
+        font-size: 1.5rem;
+    }
+    .pshow-details .lead {
+        font-size: 1rem;
+    }
+    .pshow-details .iconfont {
+        font-size: 1rem;
+    }
+    .pshow-details .btn-ytjj {
+        font-size: 1.2rem;
+    }
+    .pshow-details .favorite {
+        font-size: 1.2rem;
+    }
+    .pshow-details .favorite .iconfont {
+        font-size: 1.2rem;
+    }
 }
 
 @media (min-width:992px) {
@@ -445,6 +681,13 @@ a:hover {
         padding-left: 14px;
         padding-right: 14px;
         max-width: 33%;
+    }
+    .pshow-image {
+        flex: 1 1 60%;
+    }
+    .pshow-details {
+        flex: 1 1 30%;
+        padding-left: 20px;
     }
 }
 
@@ -455,5 +698,11 @@ a:hover {
         padding-right: 14px;
         max-width: 33%;
     }
+    .pshow-image {
+        flex: 1 1 58%;
+    }
+    .pshow-details {
+        flex: 1 1 30%;
+        padding-left: 20px;
+    }
 }
-

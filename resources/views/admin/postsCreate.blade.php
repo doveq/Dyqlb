@@ -1,13 +1,17 @@
 @extends('admin.base')
-@section('headTitle', '添加帖子')
+
+@if(isset($isEdit))
+    @section('headTitle',  '编辑帖子')
+@else
+    @section('headTitle',  '添加帖子')
+@endif
 
 @section('headJsCss')
     <link rel="stylesheet" href="/css/cropper.min.css">
     <link rel="stylesheet" href="/css/bootstrap-tagsinput.css">
-    <link rel="stylesheet" href="/css/bootstrap-tagsinput-typeahead.css">
     <script src="/js/cropper.min.js"></script>
-    <script src="/js/bloodhound.min.js"></script>
-    <script src="/js/bootstrap-tagsinput.js"></script>
+    <script src="/js/typeahead.bundle.min.js"></script>
+    <script src="/js/bootstrap-tagsinput.min.js"></script>
     <style>
 
     </style>
@@ -75,8 +79,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="description">商品标签</label>
-                    <input class="form-control" id="tags" name="tags" placeholder="商品标签" data-role="tagsinput" value="@isset($posts->tags){{$posts->tags}}@endisset" required>
+                    <label for="tags">商品标签</label>
+                    <div id="posts-tags">
+                        <input class="form-control" id="tags" name="tags" value="@isset($posts->tags){{$posts->tags}}@endisset" placeholder="" autocomplete="off" >
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -89,11 +95,22 @@
                     <input type="text" class="form-control" id="price" name="price" value="@isset($posts->price){{$posts->price}}@endisset" placeholder="0.00" required>
                 </div>
 
-                @isset($posts->title_thumb_url)
+                @if(!empty($posts->title_video_url))
                     <div class="form-group">
-                        <img src="{{$posts->title_thumb_url}}" />
+                        <video muted src="{{$posts->title_video_url}}" autoplay loop></video>
                     </div>
-                @endisset
+                @endif
+
+                <div class="form-group">
+                    <label for="title">商品视频</label>
+                    <input type="file" class="form-control-file" name="title_video" accept="video/mp4">
+                </div>
+
+                @if(!empty($posts->title_max_thumb_url))
+                    <div class="form-group">
+                        <img src="{{$posts->title_max_thumb_url}}" />
+                    </div>
+                @endif
 
                 <div class="form-group">
                     <label for="title">商品图片</label>
@@ -123,8 +140,8 @@
 
 @section('footerJsCss')
     <script>
-        var targetImgWidth = {{config('config.postsThumbWidth')}};
-        var targetImgHeight = {{config('config.postsThumbHeight')}};
+        var targetImgWidth = {{config('config.postsThumbMaxWidth')}};
+        var targetImgHeight = {{config('config.postsThumbMaxHeight')}};
 
         var initCropper = function (img, input){
             var $image = img;
@@ -195,9 +212,34 @@
             initCropper($('#cropper-image'), $('#title_thumb'));
 
             $("#posts-form").on('submit', function () {
+                /* 设置剪裁图片 */
                 setCropInfo();
+
+                /* 设置标签 */
+
+
                 return true;
             });
+
+
+            /* 标签自动完成 */
+            var autoTags = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                /* 这里只能用相对url路径 */
+                prefetch: '{{route('admin.tags.getJson', [], false)}}'
+            });
+            autoTags.initialize();
+
+            $('#tags').tagsinput({
+                trimValue: true,
+                typeaheadjs: {
+                    name: 'auto-tags',
+                    displayKey: 'name',
+                    source: autoTags.ttAdapter()
+                }
+            });
+
         });
 
     </script>
