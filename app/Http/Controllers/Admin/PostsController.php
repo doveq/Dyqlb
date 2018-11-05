@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Model\Files;
 use App\Model\Posts;
 use App\Model\Tags;
+use App\Model\Search;
 
 class PostsController extends Controller
 {
@@ -166,6 +167,9 @@ class PostsController extends Controller
                 $tags = new Tags;
                 $tags->multipleStore($request->tags);
             }
+
+            $search = new Search();
+            $search->put($posts->toArray());
 
             DB::commit();
 
